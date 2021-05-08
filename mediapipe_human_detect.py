@@ -59,22 +59,26 @@ def draw_bbox(img, bbox_list):
 
 def warning(data):
     # TODO: 경고 전송
-    os.makedirs(data['output_dir'], exist_ok=True)
-    cv2.imwrite(os.path.join(data['output_dir'], '{}.png'.format(data['i'])), data['image'])
+    os.makedirs(os.path.join(data['output_dir'], 'warning'), exist_ok=True)
+    cv2.imwrite(os.path.join(data['output_dir'], 'warning', '{}.png'.format(data['i'])), data['image'])
 
 
 def process(filename, output_dir, output_filename):
     video = cv2.VideoCapture(filename)
-    output_video = None
-
-    i = 0
     ret, image = video.read()
+    if not ret:
+        print('Invalid input file: {}'.format(filename))
+        return
+
+    os.makedirs(os.path.join('./', output_dir), exist_ok=True)
+    output_video = None
+    i = 0
     while ret:
         print(i)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         h, w = image.shape[:2]
         if output_video is None:
-            output_video = cv2.VideoWriter(os.path.join(output_dir, output_filename), cv2.VideoWriter_fourcc(*'DIVX'), 25.0, (w, h))
+            output_video = cv2.VideoWriter(os.path.join('./', output_dir, output_filename), cv2.VideoWriter_fourcc(*'DIVX'), 25.0, (w, h))
 
         # Get Annotation
         face_detection_results, bbox_face_list = get_face_detection_result(image)
@@ -112,4 +116,7 @@ def process(filename, output_dir, output_filename):
 
 if __name__ == '__main__':
     filename = load_filename()
-    process(filename, 'results', 'output.avi')
+    if len(filename) > 0:
+        ext = os.path.splitext(os.path.basename(filename))[1]
+        basename = os.path.basename(filename).replace(ext, '')
+        process(filename, 'results_{}'.format(basename), '{}_output.avi'.format(basename))
