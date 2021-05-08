@@ -43,3 +43,9 @@ def warning(data):
     os.makedirs(data['output_dir'], exist_ok=True)
     cv2.imwrite(os.path.join(data['output_dir'], '{}.png'.format(data['i'])), data['image'])
 ```
+
+아래 수치를 조절하여 주의할 bbox의 비율을 조정할 수 있습니다.
+```python
+POSE_WARNING_RATIO = 0.2
+BODY_FACE_RATIO = 0.1
+```
