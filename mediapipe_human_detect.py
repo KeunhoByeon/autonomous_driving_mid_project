@@ -1,10 +1,14 @@
 import os
-import cv2
 from tkinter import filedialog
+
+import cv2
+
 from mediapipe_utils import *
 
 POSE_WARNING_RATIO = 0.2
 BODY_FACE_RATIO = 0.1
+
+DRAW_ANNOTATION = 0  # {0: bbox, 1: landmark}
 
 
 def load_filename():
@@ -84,14 +88,15 @@ def process(filename, output_dir, output_filename):
         face_detection_results, bbox_face_list = get_face_detection_result(image)
         pose_results, bbox_pose_list = get_pose_result(image)
 
-        # Draw Annotation (bbox)
-        draw_bbox(image, bbox_face_list)
-        draw_bbox(image, bbox_pose_list)
-        # # Draw Annotation (landmark)
-        # if face_detection_results:
-        #     draw_face_detection(image, face_detection_results)
-        # for pose_result in pose_results:
-        #     draw_pose(image, pose_result)
+        # Draw Annotation
+        if DRAW_ANNOTATION:  # landmark
+            if face_detection_results:
+                draw_face_detection(image, face_detection_results)
+            for pose_result in pose_results:
+                draw_pose(image, pose_result)
+        else:  # bbox
+            draw_bbox(image, bbox_face_list)
+            draw_bbox(image, bbox_pose_list)
 
         # Write Video Frame
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
