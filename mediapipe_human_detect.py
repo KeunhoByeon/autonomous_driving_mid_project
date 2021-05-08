@@ -3,6 +3,9 @@ import cv2
 from tkinter import filedialog
 from mediapipe_utils import *
 
+POSE_WARNING_RATIO = 0.2
+BODY_FACE_RATIO = 0.1
+
 
 def load_filename():
     filename = filedialog.askopenfilename()
@@ -94,10 +97,10 @@ def process(filename, output_dir, output_filename):
         # hw_root = (h * w) ** 0.5
         threshold = h if h < w else w
         for bbox in bbox_face_list:
-            if bbox[2] - bbox[0] > threshold * 0.2 * 0.1 or bbox[3] - bbox[1] > threshold * 0.2 * 0.1:
+            if bbox[2] - bbox[0] > threshold * POSE_WARNING_RATIO * BODY_FACE_RATIO or bbox[3] - bbox[1] > threshold * POSE_WARNING_RATIO * BODY_FACE_RATIO:
                 warning({'i': i, 'image': image, 'output_dir': output_dir})
         for bbox in bbox_pose_list:
-            if bbox[2] - bbox[0] > threshold * 0.2 or bbox[3] - bbox[1] > threshold * 0.2:
+            if bbox[2] - bbox[0] > threshold * POSE_WARNING_RATIO or bbox[3] - bbox[1] > threshold * POSE_WARNING_RATIO:
                 warning({'i': i, 'image': image, 'output_dir': output_dir})
 
         i += 1
