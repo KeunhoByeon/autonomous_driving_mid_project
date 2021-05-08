@@ -8,6 +8,8 @@ pip install -r requirements.txt
 ```
 
 ### run
+mediapipe_human_detect.py를 실행하면 동영상 입력 창이 실행됩니다.  
+동영상 파일을 선택하면 프로세스가 실행되고, annotated 영상이 만들어집니다.
 ```
 python3 mediapipe_human_detect.py
 ```
