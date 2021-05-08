@@ -58,7 +58,7 @@ def get_pose_result(image):
 
 def draw_bbox(img, bbox_list):
     for bbox in bbox_list:
-        cv2.rectangle(img, (bbox[1], bbox[0]), (bbox[3], bbox[2]), (0, 255, 0))
+        cv2.rectangle(img, (bbox[1], bbox[0]), (bbox[3], bbox[2]), (0, 255, 0), thickness=2)
 
 
 def warning(data):
