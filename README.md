@@ -33,6 +33,10 @@ python mediapipe_human_detect.py
  > 평균 머리 길이 차이: 남성 2.762cm, 여성 1.206cm  
  > (출처: 이영숙. (1999). 한국 청소년의 신체 성장 특징과 체격 변화(제1보). 해부·생물인류학, 12(1), 175-186.)
 
+  
+mediapipe의 pose는 Multi-Person Pose Estimation이 아니기 때문에, 한 이미지에서 하나의 pose만 인식할 수 있습니다.  
+때문에 본 프로젝트에서는 한 이미지에서 pose를 인식하면 그 부분의 픽셀을 0으로 변경하고 다시 pose를 인식하는 방식으로 한 이미지에서 여러 pose를 인식하였습니다.
+
 ## TODO
 mediapipe_human_detect.py 코드 중 warning 함수는 
 현재 영상 중 주의할 장면의 프레임을 저장하는 것으로 구현해 두었습니다. 
