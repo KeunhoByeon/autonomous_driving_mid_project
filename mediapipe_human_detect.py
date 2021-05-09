@@ -1,3 +1,4 @@
+import time
 import os
 from tkinter import filedialog
 
@@ -77,6 +78,8 @@ def process(filename, output_dir, output_filename):
     os.makedirs(os.path.join('./', output_dir), exist_ok=True)
     output_video = None
     i = 0
+
+    start_time = time.time()
     while ret:
         print(i)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -114,7 +117,7 @@ def process(filename, output_dir, output_filename):
 
         i += 1
         ret, image = video.read()
-
+    print('Time: {}'.format(time.time() - start_time))
     video.release()
     output_video.release()
 
